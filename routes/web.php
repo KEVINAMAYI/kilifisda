@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\TestimonyController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\FrontEndEmailController;
 use App\Http\Controllers\WeeklyProgrammeController;
 
 
@@ -92,6 +93,8 @@ Route::get('/literature', function(){ return view('literature'); });
 Route::get('/portfolio-details', function(){ return view('portfolio-details'); });
 Route::get('/video-page', function(){ return view('video-page'); });
 Route::get('/clerk', function(){ return view('clerk'); });
+Route::post('/contact-kilifi-sda', [FrontEndEmailController::class,'sendContactEmail']);
+Route::post('/contact-kilifi-sda-clerk', [FrontEndEmailController::class,'sendClerkEmail']);
 Route::get('/announcements', function(){ return view('announcements'); });
 Route::get('/church-projects', [ProjectController::class,'getProjectsForProjectsPage']);
 Route::get('/church-missions',[MissionController::class,'getMissionsForMissionPage']);

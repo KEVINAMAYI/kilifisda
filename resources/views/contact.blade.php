@@ -44,6 +44,26 @@
     <section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
       <div class="container">
 
+         {{-- display success message on a successful action --}}
+         @if(Session::has('success'))
+         <div class="alert alert-success" role="alert">
+         {{ Session::get('success') }}
+         </div>
+         @endif
+
+         {{-- display error on top of the form --}}
+         @if ($errors->any())
+         <div class="alert alert-danger" role="alert">
+             <ul class="list-group">
+                 @foreach ($errors->all() as $error )
+                 <li class="list-group-item">
+                 {{ $error }}  
+                 </li>
+                 @endforeach
+             </ul>
+         </div>
+         @endif
+
         <div class="row">
 
           <div class="col-lg-6">
@@ -75,7 +95,8 @@
           </div>
 
           <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="/contact-kilifi-sda" method="post" role="form">
+              @csrf
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -87,15 +108,10 @@
               <div class="form-group mt-3">
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
               </div>
-              <div class="form-group mt-3">
+              <div class="form-group mt-3 mb-3">
                 <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
               </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+              <div class="text-center"><button type="submit" class="btn btn-md btn-success">Send Message</button></div>
             </form>
           </div>
 
