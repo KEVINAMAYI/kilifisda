@@ -37,3 +37,8 @@ readmore4.addEventListener('click', () => {
 	ouridentity.classList.remove('hide');
 	fundamentals.classList.add('hide');
 })
+
+
+$(document).ready(function () {
+    $('#announcements_table').DataTable();
+});

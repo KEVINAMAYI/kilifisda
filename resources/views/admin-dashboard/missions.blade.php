@@ -35,11 +35,31 @@
 
                     <div class="row mb-4 ml-2">
                         <span class="btn-md btn-success" style="cursor:pointer; padding-top:10px; padding-bottom:10px; padding-left:10px; padding-right:10px; border-radius:10px; border:0px; margin-top:10px; margin-bottom:10px;"
-                         data-toggle="modal" data-target="#branchModal">                   
+                         data-toggle="modal" data-target="#missionModal">                   
                             <i class="fas fa-fw fa-plus"></i>
                               Add Mission
                          </span>
                     </div>
+
+                     {{-- display success message on a successful action --}}
+                     @if(Session::has('success'))
+                     <div class="alert alert-success" role="alert">
+                     {{ Session::get('success') }}
+                     </div>
+                     @endif
+ 
+                     {{-- display error on top of the form --}}
+                     @if ($errors->any())
+                     <div class="alert alert-danger" role="alert">
+                         <ul class="list-group">
+                             @foreach ($errors->all() as $error )
+                             <li class="list-group-item">
+                             {{ $error }}  
+                             </li>
+                             @endforeach
+                         </ul>
+                     </div>
+                     @endif
 
                     <div class="row">
 
@@ -68,44 +88,17 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>21-10-2022</td>
-                                            <td>27-10-2022</td>
-                                            <td>Mosocho Township Mission </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>21-10-2022</td>
-                                            <td>27-10-2022</td>
-                                            <td>Mosocho Township Mission </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>21-10-2022</td>
-                                            <td>27-10-2022</td>
-                                            <td>Mosocho Township Mission </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>21-10-2022</td>
-                                            <td>27-10-2022</td>
-                                            <td>Mosocho Township Mission </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>  
-                                        </tr>
+                                        @foreach($missions as $mission)
+                                            <tr>
+                                                <td>{{ $mission->mission_start_date }}</td>
+                                                <td>{{ $mission->mission_end_date }}</td>
+                                                <td>{{ $mission->mission_description }}</td>
+                                                <td>
+                                                    <button class="btn-sm btn-warning">edit</button>
+                                                    <a href="/delete-mission/{{ $mission->id  }}" class="btn-sm btn-info">delete</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -148,41 +141,42 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Add Employee Modal-->
-    <div class="modal fade" id="branchModal" tabindex="-1" role="dialog" aria-labelledby="employeeModal"
+    <!-- Add Mission Modal-->
+    <form action="/add-mission" method="POST">
+    @csrf
+    <div class="modal fade" id="missionModal" tabindex="-1" role="dialog" aria-labelledby="missionModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Mission</h5>
+                    <h5 class="modal-title" id="missionModalLabel">Add Mission</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Start Date</label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_start_date">Mission Start Date</label>
+                        <input type="date" class="form-control" name="mission_start_date" id="mission_start_date">
                     </div>
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">End Date</label>
-                        <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_end_date">Mission End Date</label>
+                        <input type="date" class="form-control" id="mission_end_date" name="mission_end_date">
                     </div>
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Mission Description</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_description">Mission Description</label>
+                        <textarea style="width:100%;" name="mission_description" id="mission_description"  rows="5"></textarea>
                     </div>
         
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Add Mission</a>
+                    <button type="submit" class="btn btn-primary">Add Mission</a>
                 </div>
-                </form>
             </div>
         </div>
     </div>
+</form>
 
     @include('admin-dashboard.layouts.javascript')
 

@@ -35,18 +35,38 @@
 
                     <div class="row mb-4 ml-2">
                         <span class="btn-md btn-success" style="cursor:pointer; padding-top:10px; padding-bottom:10px; padding-left:10px; padding-right:10px; border-radius:10px; border:0px; margin-top:10px; margin-bottom:10px;"
-                         data-toggle="modal" data-target="#branchModal">                   
+                         data-toggle="modal" data-target="#projectModal">                   
                          <i class="fas fa-fw fa-plus"></i>
                            Add A Project 
                          </span>
                     </div>
+
+                    {{-- display success message on a successful action --}}
+                    @if(Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                    {{ Session::get('success') }}
+                    </div>
+                    @endif
+
+                    {{-- display error on top of the form --}}
+                    @if ($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="list-group">
+                            @foreach ($errors->all() as $error )
+                            <li class="list-group-item">
+                            {{ $error }}  
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
 
                     <div class="row">
 
                         <!-- DataTales Example -->
                     <div class="card col-md-12 col-lg-12 shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Testimonies</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -70,58 +90,20 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Building Wall</td>
-                                            <td>Building Church Fence</td>
-                                            <td>Complete</td>
-                                            <td>
-                                                <img style="border:2px solid blue; border-radius:100%;" src="corporate-dashboard/img/kra_logo.png" height="50" width="50" alt="Corporate Logo">
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>Building Wall</td>
-                                            <td>Building Church Fence</td>
-                                            <td>Pending</td>
-                                            <td>
-                                                <img style="border:2px solid blue; border-radius:100%;" src="corporate-dashboard/img/kra_logo.png" height="50" width="50" alt="Corporate Logo">
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>Building Wall</td>
-                                            <td>Building Church Fence</td>
-                                            <td>Complete</td>
-                                            <td>
-                                                <img style="border:2px solid blue; border-radius:100%;" src="corporate-dashboard/img/kra_logo.png" height="50" width="50" alt="Corporate Logo">
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>Building Wall</td>
-                                            <td>Building Church Fence</td>
-                                            <td>Pending</td>
-                                            <td>
-                                                <img style="border:2px solid blue; border-radius:100%;" src="corporate-dashboard/img/kra_logo.png" height="50" width="50" alt="Corporate Logo">
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                            
-                                        </tr>
+                                        @foreach($projects as $project)
+                                            <tr>
+                                                <td>{{ $project->project_name }}</td>
+                                                <td>{{ $project->project_description }}</td>
+                                                <td>{{ $project->projects_status }}</td>
+                                                <td>
+                                                    <img style="border:2px solid blue; border-radius:100%;" src="project-pictures/{{ $project->project_photo_url }}" height="50" width="50" alt="Project Picture">
+                                                </td>
+                                                <td>
+                                                    <button class="btn-sm btn-warning">edit</button>
+                                                    <a href="/delete-project/{{ $project->id }}" class="btn-sm btn-info">delete</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach  
                                     </tbody>
                                 </table>
                             </div>
@@ -164,48 +146,48 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Add Employee Modal-->
-    <div class="modal fade" id="branchModal" tabindex="-1" role="dialog" aria-labelledby="employeeModal"
+    <!-- Add Project Modal-->
+    <form action="/add-project" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add A Testimony</h5>
+                    <h5 class="modal-title" id="projectModalLabel">Add A Project</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Person Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="project_name">Project Name</label>
+                        <input type="text" class="form-control" name="project_name" id="project_name">
                     </div>
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Description</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="project_description">Project Description</label>
+                        <textarea style="width:100%;" name="project_description" id="project_description"  rows="5"></textarea>
                     </div>
                     <div class="form-group" style="margin-bottom:-10px;">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Status</label><br>
-                        <select style="border-radius:5px; width:100%; padding:10px;" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                          <option selected>Complete</option>
-                          <option value="1">Pending</option>
+                        <label style="margin-left:0px; font-weight:bold;" for="project_status">Status</label><br>
+                        <select id="project_status" name="project_status" style="border-radius:5px; width:100%; padding:10px;" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                          <option value="complete">Complete</option>
+                          <option value="pending">Pending</option>
                         </select>
                       </div>
                     <div class="form-group" style="padding-top:10px; padding-bottom:10px;">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Project Photo</label>
-                        <input type="file" style="padding-top:10px; padding-bottom:40px;" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="project_photo">Project Photo</label>
+                        <input type="file" style="padding-top:10px; padding-bottom:40px;" class="form-control" id="project_photo" name="project_photo">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Add Project</a>
+                    <button type="submit" class="btn btn-primary">Add Project</button>
                 </div>
-                </form>
             </div>
         </div>
     </div>
-
+    </form>
     @include('admin-dashboard.layouts.javascript')
 
 @endsection

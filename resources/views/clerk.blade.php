@@ -55,21 +55,20 @@
   </header><!-- End Header -->
 
   <!-- ======= Contact Section ======= -->
-  <section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+  <section class="contact">
     <div class="container">
 
-      <div class="row">
-
-        <div class="col-lg-6">
+      <div class="row" style="margin-top:50px;">
+        <div class="col-md-6 p-2">
             <div class="info-box">
-              <h3>Transfer Membership To Kilifi Central SDA</h3>
+              <h3 style="color:rgb(30,67,86)">Transfer Membership To Kilifi Central SDA</h3>
               <p>Send us an email indicating the church you are transfering your membership from, and indicate the Tel. No. of your Pr./Elder/Clerk. Also state your area of interest in church service</p>
             </div>
           </div>
-            <div class="col-md-6">
+            <div class="col-md-6 p-2">
               <div class="info-box">
-                <h3>Transfer Membership From Kilifi Central SDA</h3>
-                <p>Send us an email indicating the church you are transfering your membership to, and indicate the Tel. No. of its Pr./Elder/Clerk.</p>
+                <h3 style="color:rgb(30,67,86)">Transfer Membership From Kilifi Central SDA</h3>
+                <p>Send us an email indicating the church you are transfering your membership to, and indicate the Tel. No. of its Pr./Elder/Clerk. If possible state the reason for seeking transfer</p>
               </div>
             </div>
 

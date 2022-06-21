@@ -35,15 +35,34 @@
 
                     <div class="row mb-4 ml-2">
                         <span class="btn-md btn-success" style="cursor:pointer; padding-top:10px; padding-bottom:10px; padding-left:10px; padding-right:10px; border-radius:10px; border:0px; margin-top:10px; margin-bottom:10px;"
-                         data-toggle="modal" data-target="#branchModal">                   
+                         data-toggle="modal" data-target="#weeklyProgrammeModal">                   
                          <i class="fas fa-fw fa-plus"></i>
-                           Add A Project 
+                           Add Weekly Programme 
                          </span>
                     </div>
 
-                    <div class="row">
+                      {{-- display success message on a successful action --}}
+                      @if(Session::has('success'))
+                      <div class="alert alert-success" role="alert">
+                      {{ Session::get('success') }}
+                      </div>
+                      @endif
+  
+                      {{-- display error on top of the form --}}
+                      @if ($errors->any())
+                      <div class="alert alert-danger" role="alert">
+                          <ul class="list-group">
+                              @foreach ($errors->all() as $error )
+                              <li class="list-group-item">
+                              {{ $error }}  
+                              </li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
 
-                        <!-- DataTales Example -->
+                    <div class="row">
+                    <!-- DataTales Example -->
                     <div class="card col-md-12 col-lg-12 shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Testimonies</h6>
@@ -53,89 +72,37 @@
                                 <table class="table table-bordered" id="branchesTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Day</th>
-                                            <th>Programmes</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Programme Name</th>
                                             <th>Invited Guests</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Day</th>
-                                            <th>Programmes</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Programme Name</th>
                                             <th>Invited Guests</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @foreach($weeklyProgrammes as $weeklyProgramme)
                                         <tr>
-                                            <td>21-2-2022</td>
-                                            <td>
-                                                Praying
-                                                Singing
-                                                Bible Trivia
-                                            </td>
-                                            <td>
-                                                Donald Kaniaru
-                                                Peter Makau
-                                                Mark Omondi
-                                            </td>
+                                            <td>{{ $weeklyProgramme->start_date }}</td>
+                                            <td>{{ $weeklyProgramme->end_date }}</td>
+                                            <td>{{ $weeklyProgramme->programme_name }}</td>
+                                            <td>{{ $weeklyProgramme->invited_guest }}</td>
                                             <td>
                                                 <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
+                                                <a href="/delete-weekly-programme/{{ $weeklyProgramme->id }}" class="btn-sm btn-info">delete</a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>21-2-2022</td>
-                                            <td>
-                                                Praying
-                                                Singing
-                                                Bible Trivia
-                                            </td>
-                                            <td>
-                                                Donald Kaniaru
-                                                Peter Makau
-                                                Mark Omondi
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>21-2-2022</td>
-                                            <td>
-                                                Praying
-                                                Singing
-                                                Bible Trivia
-                                            </td>
-                                            <td>
-                                                Donald Kaniaru
-                                                Peter Makau
-                                                Mark Omondi
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>21-2-2022</td>
-                                            <td>
-                                                Praying
-                                                Singing
-                                                Bible Trivia
-                                            </td>
-                                            <td>
-                                                Donald Kaniaru
-                                                Peter Makau
-                                                Mark Omondi
-                                            </td>
-                                            <td>
-                                                <button class="btn-sm btn-warning">edit</button>
-                                                <button class="btn-sm btn-info">delete</button>
-                                            </td>
-                                        </tr>
+                                            
+                                        @endforeach
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -178,47 +145,46 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Add Employee Modal-->
-    <div class="modal fade" id="branchModal" tabindex="-1" role="dialog" aria-labelledby="employeeModal"
+    <!-- Add Weekly program Modal-->
+    <form action="/add-weekly-programme" method="POST">
+    @csrf
+    <div class="modal fade" id="weeklyProgrammeModal" tabindex="-1" role="dialog" aria-labelledby="weeklyProgrammeModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add A Testimony</h5>
+                    <h5 class="modal-title" id="weeklyProgrammeModalLabel">Add Weekly Programme</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Person Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_start_date">Start Date</label>
+                        <input type="date" class="form-control" name="programme_start_date" id="programme_start_date">
                     </div>
                     <div class="form-group">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Description</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_end_date">End Date</label>
+                        <input type="date" class="form-control" id="programme_end_date" name="programme_end_date">
+                    </div> 
+                    <div class="form-group">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_description">Programme Name</label>
+                        <input type="text" class="form-control" name="programme_name" id="programme_name">
                     </div>
-                    <div class="form-group" style="margin-bottom:-10px;">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Status</label><br>
-                        <select style="border-radius:5px; width:100%; padding:10px;" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                          <option selected>Complete</option>
-                          <option value="1">Pending</option>
-                        </select>
-                      </div>
-                    <div class="form-group" style="padding-top:10px; padding-bottom:10px;">
-                        <label style="margin-left:0px; font-weight:bold;" for="exampleInputEmail1">Project Photo</label>
-                        <input type="file" style="padding-top:10px; padding-bottom:40px;" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name">
+                    <div class="form-group">
+                        <label style="margin-left:0px; font-weight:bold;" for="mission_description">Invited Guests</label>
+                        <textarea style="width:100%;" name="invited_guests" id="invited_guests"  rows="5"></textarea>
                     </div>
+        
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Add Project</a>
+                    <button type="submit" class="btn btn-primary">Add Weeekly Programme</button>
                 </div>
-                </form>
             </div>
         </div>
     </div>
+    </form>
 
     @include('admin-dashboard.layouts.javascript')
 

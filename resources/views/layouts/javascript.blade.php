@@ -8,9 +8,12 @@
 <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
 
+
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
 <script src="assets/js/about1.js"></script>
 <script src="assets/js/footer.js"></script>
 <script src="assets/js/nav.js"></script>
+
+

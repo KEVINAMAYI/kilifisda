@@ -67,7 +67,7 @@
   <div class="bulletin">
     <h2>Download Our Weekly Church Bulletin</h2>
     <h4>(Uploaded every Thursday)</h4>
-    <button style="padding:10px; margin-top:20px; margin-bottom:20px;" class="btn btn-primary btn-lg">Download PDF <i class="fa-solid fa-download"></i></button>  
+      <a href="bulletin-files/{{ App\Models\Bulletin::getBulletinURL(); }}" download style="padding:10px; margin-top:20px; margin-bottom:20px;" class="btn btn-primary btn-lg">Download PDF</a>  
   </div>
     <!-- ======= Blog Section ======= -->
     <section id="blog" class="blog">

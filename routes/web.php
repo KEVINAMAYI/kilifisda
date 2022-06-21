@@ -2,7 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MissionController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\TestimonyController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\WeeklyProgrammeController;
+
+
 
 
 
@@ -34,10 +41,36 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/add-gallery-image',[GalleryController::class,'addGalleryImage']);
     Route::get('/delete-gallery-image/{gallery}',[GalleryController::class,'deleteGalleryImage']);
 
-    Route::get('/weekly-programme', function(){ return view('admin-dashboard.weekly-programme'); });
-    Route::get('/mission', function(){ return view('admin-dashboard.missions'); });
-    Route::get('/projects', function(){ return view('admin-dashboard.projects'); });
-    Route::get('/admcommunication', function(){ return view('admin-dashboard.communication'); });
+
+    //mission routes
+    Route::get('/mission', [MissionController::class,'getMissions']);
+    Route::post('/add-mission', [MissionController::class,'addMission']);
+    Route::get('/delete-mission/{mission}',[MissionController::class,'deleteMission']);
+
+
+
+    //project routes
+    Route::get('/projects',[ProjectController::class,'getProjects']);
+    Route::post('/add-project',[ProjectController::class,'addProject']);
+    Route::get('/delete-project/{project}',[ProjectController::class,'deleteProject']);
+
+
+    //announcements routes
+    Route::get('/admannouncements', [AnnouncementController::class,'getAnnouncements']);
+    Route::post('/add-announcement',[AnnouncementController::class,'addAnnouncement']);
+    Route::get('/delete-announcement/{announcement}',[AnnouncementController::class,'deleteAnnouncement']);
+
+    //bulletin routes
+    Route::get('/bulletin',[BulletinController::class,'getBulletins']);
+    Route::post('/add-bulletin',[BulletinController::class,'addBulletin']);
+
+    //weekly programme routes
+    Route::get('/weekly-programme',[WeeklyProgrammeController::class,'getWeeklyProgrammes']);
+    Route::post('/add-weekly-programme',[WeeklyProgrammeController::class,'addWeeklyProgramme']);
+    Route::get('/delete-weekly-programme/{weeklyprogramme}',[WeeklyProgrammeController::class,'deleteWeeklyProgramme']);
+
+
+
     Route::get('/members', function(){ return view('admin-dashboard.members'); });
     Route::get('/admin', function(){ return view('admin-dashboard.admin'); });
 
@@ -59,6 +92,17 @@ Route::get('/literature', function(){ return view('literature'); });
 Route::get('/portfolio-details', function(){ return view('portfolio-details'); });
 Route::get('/video-page', function(){ return view('video-page'); });
 Route::get('/clerk', function(){ return view('clerk'); });
+Route::get('/announcements', function(){ return view('announcements'); });
+Route::get('/church-projects', [ProjectController::class,'getProjectsForProjectsPage']);
+Route::get('/church-missions',[MissionController::class,'getMissionsForMissionPage']);
+Route::get('/church-announcements',[AnnouncementController::class,'getAnnouncementsForAnnouncementsPage']);
+Route::get('/church-weekly-programme',[WeeklyProgrammeController::class,'getWeeklyProgrammesForWeeklyProgrammesPage']);
+
+
+
+
+
+
 
 
 

@@ -30,9 +30,9 @@
 
 <!-- Nav Item - Utilities Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="/admcommunication">
+    <a class="nav-link collapsed" href="/admannouncements">
         <i class="fas fa-fw fa-comment"></i>
-        <span>Communications</span>
+        <span>Announcements</span>
     </a>
 </li>
 
@@ -65,6 +65,14 @@
     <a class="nav-link collapsed" href="/admgallery">
         <i class="fas fa-fw fa-image"></i>
         <span>Gallery</span>
+    </a>
+</li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="/bulletin">
+        <i class="fas fa-fw fa-file"></i>
+        <span>Weeekly Bulletin</span>
     </a>
 </li>
 
